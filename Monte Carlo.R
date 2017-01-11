@@ -8,15 +8,13 @@
 # Simulate. r value indicates length on each side of 0 
 nsims = 1000
 pi = numeric(nsims)
-
-
-
-for(i in 1:nsims){
 r = 5 
 nthrows = 1000
 x = numeric(nthrows)
 y = numeric(nthrows)
 
+for(i in 1:nsims){
+  
 # Use Uniform distribtuion
 x = runif(n = nthrows, min = -r, max = r)
 y = runif(n = nthrows, min = -r, max = r)
@@ -41,6 +39,7 @@ head(coordsDF)
 # pi = 4 * in circle / total
 
 pi[i] = 4 * sum(coordsDF$circle) / length(coordsDF$circle)
+  
 }
 
 calcStats = function(x){
@@ -48,8 +47,10 @@ calcStats = function(x){
   sepi = sd(x)
   lowEst = mean(x) - qnorm(0.975)*sepi
   highEst = mean(x) + qnorm(0.975)*sepi
-  return(c(SampleSizeIn1000s = length(x)/1000, Mean = meanpi, StandardError = sepi, CIlowerbound = lowEst, CIupperbound = highEst))
+  return(c(SampleSizeIn1000s = length(x)/1000, piEst = meanpi, StandardError = sepi, CIlowerbound = lowEst, CIupperbound = highEst))
 }
 
 calcStats(pi)
 
+piEst = results[2]
+piEst
